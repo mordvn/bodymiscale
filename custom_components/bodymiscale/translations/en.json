@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "Basal metabolism" },
       "bmi": { "name": "BMI" },
+      "body_cell_mass": { "name": "Body cell mass" },
       "body_fat": { "name": "Body fat" },
       "body_score": { "name": "Body score" },
       "bone_mass": { "name": "Bone mass" },
+      "ecw_tbw_ratio": { "name": "ECW/TBW ratio" },
+      "extracellular_water": { "name": "Extracellular water" },
+      "intracellular_water": { "name": "Intracellular water" },
       "last_measurement_time": { "name": "Last measurement time" },
       "lean_body_mass": { "name": "Lean body mass" },
       "metabolic_age": { "name": "Metabolic age" },
       "muscle_mass": { "name": "Muscle mass" },
       "protein": { "name": "Protein" },
+      "skeletal_muscle_mass": { "name": "Skeletal muscle mass" },
       "visceral_fat": { "name": "Visceral fat" },
       "water": { "name": "Water" },
       "weight": { "name": "Weight" }
@@ -85,6 +90,7 @@
             "underweight": "Underweight"
           }
         },
+        "body_cell_mass": { "name": "Body cell mass" },
         "body_fat": { "name": "Body fat" },
         "body_score": { "name": "Body score" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "Bone mass" },
+        "ecw_tbw_ratio": { "name": "ECW/TBW ratio" },
+        "extracellular_water": { "name": "Extracellular water" },
         "fat_mass_to_gain": { "name": "Fat mass to gain" },
         "fat_mass_to_lose": { "name": "Fat mass to lose" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "Impedance" },
         "impedance_high": { "name": "Impedance (250 kHz)" },
         "impedance_low": { "name": "Impedance (50 kHz)" },
+        "intracellular_water": { "name": "Intracellular water" },
         "last_measurement_time": { "name": "Last measurement time" },
         "lean_body_mass": { "name": "Lean body mass" },
         "metabolic_age": { "name": "Metabolic age" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "Protein" },
+        "skeletal_muscle_mass": { "name": "Skeletal muscle mass" },
         "visceral_fat": { "name": "Visceral fat" },
         "water": { "name": "Water" },
         "weight": { "name": "Weight" }
