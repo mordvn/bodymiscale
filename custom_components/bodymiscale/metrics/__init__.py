@@ -47,6 +47,7 @@ from ..const import (
     IMPEDANCE_MODE_DUAL,
     IMPEDANCE_MODE_STANDARD,
     PROBLEM_NONE,
+    PROFILE_MATCH_RECALC_DELAY,
     UNIT_POUNDS,
 )
 from ..models import Gender, Metric
@@ -194,6 +195,7 @@ class BodyScaleMetricsHandler:
         self._subscribers: dict[
             Metric, list[Callable[[StateType | datetime], None]]
         ] = {}
+        self._profile_refresh_handle: CALLBACK_TYPE | None = None
 
         # Build the dependency graph
         self._dependencies: dict[Metric, MetricInfo] = {}
@@ -439,6 +441,37 @@ class BodyScaleMetricsHandler:
             _LOGGER.debug("Ignoring invalid profile id value: %s", raw)
             return
         self._update_available_metric(Metric.PROFILE_ID, profile_id)
+        # BLE events can arrive out of order; wait a bit and then replay.
+        self._schedule_profile_replay()
+
+    def _schedule_profile_replay(self) -> None:
+        """Schedule delayed replay after profile id update."""
+        if self._profile_refresh_handle is not None:
+            self._profile_refresh_handle()
+
+        self._profile_refresh_handle = self._hass.loop.call_later(
+            PROFILE_MATCH_RECALC_DELAY, self._replay_for_current_profile
+        ).cancel
+
+    def _replay_for_current_profile(self) -> None:
+        """Replay measurement states once BLE values have likely settled."""
+        self._profile_refresh_handle = None
+        if not self._profile_matches_filter():
+            return
+
+        weight_entity = self._config.get(CONF_SENSOR_WEIGHT)
+        if not weight_entity:
+            return
+        weight_state = self._hass.states.get(weight_entity)
+        if weight_state is None:
+            return
+
+        valid, problem = self._process_weight(weight_state)
+        if problem:
+            self._set_sensor_problem(weight_entity, problem)
+        elif valid:
+            self._clear_sensor_problem(weight_entity)
+            self._trigger_dependent_recalculation()
 
     def _profile_matches_filter(self) -> bool:
         """Return True when event data belongs to selected profile (or no filter)."""
