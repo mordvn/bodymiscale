@@ -37,7 +37,9 @@ from ..const import (
     CONF_SENSOR_IMPEDANCE_HIGH,
     CONF_SENSOR_IMPEDANCE_LOW,
     CONF_SENSOR_LAST_MEASUREMENT_TIME,
+    CONF_SENSOR_PROFILE_ID,
     CONF_SENSOR_WEIGHT,
+    CONF_TARGET_PROFILE_ID,
     CONSTRAINT_IMPEDANCE_MAX,
     CONSTRAINT_IMPEDANCE_MIN,
     CONSTRAINT_WEIGHT_MAX,
@@ -217,6 +219,8 @@ class BodyScaleMetricsHandler:
 
         if CONF_SENSOR_LAST_MEASUREMENT_TIME in self._config:
             sensors.append(self._config[CONF_SENSOR_LAST_MEASUREMENT_TIME])
+        if CONF_SENSOR_PROFILE_ID in self._config:
+            sensors.append(self._config[CONF_SENSOR_PROFILE_ID])
 
         self._remove_listener = async_track_state_change_event(
             self._hass,
@@ -273,6 +277,13 @@ class BodyScaleMetricsHandler:
     @callback
     def _state_changed(self, entity_id: str | None, new_state: State | None) -> None:
         if entity_id is None or new_state is None:
+            return
+
+        if entity_id == self._config.get(CONF_SENSOR_PROFILE_ID):
+            self._process_profile_id(new_state)
+            return
+
+        if not self._profile_matches_filter():
             return
 
         raw = new_state.state
@@ -389,6 +400,41 @@ class BodyScaleMetricsHandler:
         except (ValueError, TypeError) as e:
             _LOGGER.error("Invalid date format for last measurement: %s (%s)", raw, e)
             return "invalid_format"
+
+    def _process_profile_id(self, state: State) -> None:
+        """Update the latest profile id from the configured source entity."""
+        raw = state.state
+        if raw in (STATE_UNAVAILABLE, STATE_UNKNOWN):
+            return
+        try:
+            profile_id = int(float(raw))
+        except (TypeError, ValueError):
+            _LOGGER.debug("Ignoring invalid profile id value: %s", raw)
+            return
+        self._update_available_metric(Metric.PROFILE_ID, profile_id)
+
+    def _profile_matches_filter(self) -> bool:
+        """Return True when event data belongs to selected profile (or no filter)."""
+        target_raw = self._config.get(CONF_TARGET_PROFILE_ID)
+        profile_entity = self._config.get(CONF_SENSOR_PROFILE_ID)
+        if target_raw is None or profile_entity is None:
+            return True
+
+        try:
+            target = int(float(target_raw))
+        except (TypeError, ValueError):
+            return True
+
+        current_state = self._hass.states.get(profile_entity)
+        if current_state is None:
+            return False
+
+        try:
+            current = int(float(current_state.state))
+        except (TypeError, ValueError):
+            return False
+
+        return current == target
 
     # ── Problem management ────────────────────────────────────────────────────
 

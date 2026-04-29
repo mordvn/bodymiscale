@@ -26,12 +26,15 @@
           "height": "Height (cm)",
           "impedance_mode": "Impedance mode",
           "last_measurement_time": "Last measurement time sensor",
+          "profile_id": "Profile ID sensor",
+          "target_profile_id": "Profile ID to track",
           "weight": "Weight sensor"
         },
         "data_description": {
           "calculation_mode": "Xiaomi: identical to Zepp Life app. Science: WHO / Mifflin formulas. Has no effect in S400 dual-frequency mode.",
           "impedance_mode": "None: scale without impedance. Standard: single-frequency (Xiaomi Gen2). Dual-frequency S400: 50 kHz + 250 kHz sensors.",
-          "last_measurement_time": "Optional. Leave blank if you do not have this sensor."
+          "last_measurement_time": "Optional. Leave blank if you do not have this sensor.",
+          "target_profile_id": "Optional. If set, only measurements matching this profile id are used."
         },
         "title": "Configuration"
       },
@@ -130,6 +133,7 @@
         "lean_body_mass": { "name": "Lean body mass" },
         "metabolic_age": { "name": "Metabolic age" },
         "muscle_mass": { "name": "Muscle mass" },
+        "profile_id": { "name": "Profile ID" },
         "problem": {
           "name": "Problem",
           "state": {
@@ -178,12 +182,15 @@
           "height": "Height (cm)",
           "impedance_mode": "Impedance mode",
           "last_measurement_time": "Last measurement time sensor",
+          "profile_id": "Profile ID sensor",
+          "target_profile_id": "Profile ID to track",
           "weight": "Weight sensor"
         },
         "data_description": {
           "calculation_mode": "Xiaomi: identical to Zepp Life app. Science: WHO / Mifflin formulas. Has no effect in S400 dual-frequency mode.",
           "impedance_mode": "None: scale without impedance. Standard: single-frequency (Xiaomi Gen2). Dual-frequency S400: 50 kHz + 250 kHz sensors.",
-          "last_measurement_time": "Optional. Leave blank if you do not have this sensor."
+          "last_measurement_time": "Optional. Leave blank if you do not have this sensor.",
+          "target_profile_id": "Optional. If set, only measurements matching this profile id are used."
         },
         "title": "Configuration"
       }

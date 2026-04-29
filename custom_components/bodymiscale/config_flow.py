@@ -28,7 +28,9 @@ from .const import (
     CONF_SENSOR_IMPEDANCE_HIGH,
     CONF_SENSOR_IMPEDANCE_LOW,
     CONF_SENSOR_LAST_MEASUREMENT_TIME,
+    CONF_SENSOR_PROFILE_ID,
     CONF_SENSOR_WEIGHT,
+    CONF_TARGET_PROFILE_ID,
     CONSTRAINT_HEIGHT_MAX,
     CONSTRAINT_HEIGHT_MIN,
     DOMAIN,
@@ -83,6 +85,25 @@ def _get_main_options_schema(
                 },
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain=["sensor", "input_datetime"])
+            ),
+            vol.Optional(
+                CONF_SENSOR_PROFILE_ID,
+                description={"suggested_value": defaults.get(CONF_SENSOR_PROFILE_ID)},
+            ): selector.EntitySelector(
+                selector.EntitySelectorConfig(
+                    domain=["sensor", "input_number", "number"]
+                )
+            ),
+            vol.Optional(
+                CONF_TARGET_PROFILE_ID,
+                description={"suggested_value": defaults.get(CONF_TARGET_PROFILE_ID)},
+            ): selector.NumberSelector(
+                selector.NumberSelectorConfig(
+                    mode=selector.NumberSelectorMode.BOX,
+                    min=1,
+                    max=16,
+                    step=1,
+                )
             ),
             vol.Required(
                 CONF_IMPEDANCE_MODE,
@@ -202,6 +223,8 @@ class BodyMiScaleFlowHandler(ConfigFlow, domain=DOMAIN):
 
             if not errors:
                 self._data.update(user_input)
+                if not self._data.get(CONF_SENSOR_PROFILE_ID):
+                    self._data.pop(CONF_TARGET_PROFILE_ID, None)
                 if user_input[CONF_IMPEDANCE_MODE] == IMPEDANCE_MODE_NONE:
                     return self.async_create_entry(
                         title=self._data[CONF_NAME],
@@ -257,6 +280,8 @@ class BodyMiScaleOptionsFlowHandler(OptionsFlow):
 
             if not errors:
                 self._data.update(user_input)
+                if not self._data.get(CONF_SENSOR_PROFILE_ID):
+                    self._data.pop(CONF_TARGET_PROFILE_ID, None)
                 if user_input[CONF_IMPEDANCE_MODE] == IMPEDANCE_MODE_NONE:
                     # Clean up orphaned impedance keys
                     for k in [

@@ -26,12 +26,15 @@
           "height": "Рост (см)",
           "impedance_mode": "Режим биоимпеданса",
           "last_measurement_time": "Датчик времени последнего взвешивания",
+          "profile_id": "Датчик Profile ID",
+          "target_profile_id": "Profile ID для отслеживания",
           "weight": "Датчик веса"
         },
         "data_description": {
           "calculation_mode": "Xiaomi: как в приложении Zepp Life. Научный: формулы ВОЗ / Миффлина. Не влияет на расчеты S400.",
           "impedance_mode": "Нет: весы без анализатора. Стандарт: одна частота (Xiaomi Gen2). Двухчастотный S400: датчики 50 кГц + 250 кГц.",
-          "last_measurement_time": "Опционально. Оставьте пустым, если датчик отсутствует."
+          "last_measurement_time": "Опционально. Оставьте пустым, если датчик отсутствует.",
+          "target_profile_id": "Опционально. Если указано, учитываются только измерения с этим Profile ID."
         },
         "title": "Настройка"
       },
@@ -130,6 +133,7 @@
         "lean_body_mass": { "name": "Безжировая масса тела" },
         "metabolic_age": { "name": "Метаболический возраст" },
         "muscle_mass": { "name": "Мышечная масса" },
+        "profile_id": { "name": "Profile ID" },
         "problem": {
           "name": "Проблема",
           "state": {
@@ -178,12 +182,15 @@
           "height": "Рост (см)",
           "impedance_mode": "Режим биоимпеданса",
           "last_measurement_time": "Датчик времени последнего взвешивания",
+          "profile_id": "Датчик Profile ID",
+          "target_profile_id": "Profile ID для отслеживания",
           "weight": "Датчик веса"
         },
         "data_description": {
           "calculation_mode": "Xiaomi: идентично Zepp Life. Научный: ВОЗ / Миффлина. Не применимо для режима S400.",
           "impedance_mode": "Нет: без анализатора. Стандарт: одна частота (Xiaomi Gen2). Двухчастотный S400: 50 кГц + 250 кГц.",
-          "last_measurement_time": "Опционально. Оставьте пустым, если датчик не существует."
+          "last_measurement_time": "Опционально. Оставьте пустым, если датчик не существует.",
+          "target_profile_id": "Опционально. Если указано, учитываются только измерения с этим Profile ID."
         },
         "title": "Настройка"
       }

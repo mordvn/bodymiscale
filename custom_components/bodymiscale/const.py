@@ -50,6 +50,8 @@ CONF_SENSOR_IMPEDANCE = "impedance"  # Mode standard
 CONF_SENSOR_IMPEDANCE_LOW = "impedance_low"  # dual mode 50 kHz
 CONF_SENSOR_IMPEDANCE_HIGH = "impedance_high"  # dual mode 250 kHz
 CONF_SENSOR_LAST_MEASUREMENT_TIME = "last_measurement_time"
+CONF_SENSOR_PROFILE_ID = "profile_id"
+CONF_TARGET_PROFILE_ID = "target_profile_id"
 
 # Attributes
 ATTR_AGE = "age"
