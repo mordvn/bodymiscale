@@ -342,17 +342,44 @@ class BodyScaleMetricsHandler:
             val *= 0.45359237
 
         self._update_available_metric(Metric.WEIGHT, val)
+        self._refresh_measurement_metrics_from_states()
 
-        # Fallback timestamp if no dedicated sensor
-        if (
-            CONF_SENSOR_LAST_MEASUREMENT_TIME not in self._config
-            or self._available_metrics.get(Metric.LAST_MEASUREMENT_TIME) is None
-        ):
-            self._update_available_metric(
-                Metric.LAST_MEASUREMENT_TIME, state.last_changed
-            )
+        # Keep a reliable measurement timestamp even if dedicated time sensor lags.
+        self._update_available_metric(Metric.LAST_MEASUREMENT_TIME, state.last_changed)
 
         return True, None
+
+    def _refresh_measurement_metrics_from_states(self) -> None:
+        """Refresh impedance/time metrics from current states after accepted weight."""
+        mode = self._config.get(CONF_IMPEDANCE_MODE, "none")
+
+        if mode == IMPEDANCE_MODE_STANDARD:
+            entity_id = self._config.get(CONF_SENSOR_IMPEDANCE)
+            if entity_id and (state := self._hass.states.get(entity_id)) is not None:
+                valid, problem = self._process_impedance(state, Metric.IMPEDANCE)
+                if problem:
+                    self._set_sensor_problem(entity_id, problem)
+                elif valid:
+                    self._clear_sensor_problem(entity_id)
+        elif mode == IMPEDANCE_MODE_DUAL:
+            for entity_id, metric in (
+                (self._config.get(CONF_SENSOR_IMPEDANCE_LOW), Metric.IMPEDANCE_LOW),
+                (self._config.get(CONF_SENSOR_IMPEDANCE_HIGH), Metric.IMPEDANCE_HIGH),
+            ):
+                if entity_id and (state := self._hass.states.get(entity_id)) is not None:
+                    valid, problem = self._process_impedance(state, metric)
+                    if problem:
+                        self._set_sensor_problem(entity_id, problem)
+                    elif valid:
+                        self._clear_sensor_problem(entity_id)
+
+        entity_id = self._config.get(CONF_SENSOR_LAST_MEASUREMENT_TIME)
+        if entity_id and (state := self._hass.states.get(entity_id)) is not None:
+            problem = self._process_last_measurement_time(state)
+            if problem:
+                self._set_sensor_problem(entity_id, problem)
+            else:
+                self._clear_sensor_problem(entity_id)
 
     def _process_impedance(
         self, state: State, metric: Metric
