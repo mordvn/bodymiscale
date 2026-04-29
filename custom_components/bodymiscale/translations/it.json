@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "Metabolismo basale" },
       "bmi": { "name": "BMI" },
+      "body_cell_mass": { "name": "Massa cellulare" },
       "body_fat": { "name": "Grasso corporeo" },
       "body_score": { "name": "Punteggio corpo" },
       "bone_mass": { "name": "Massa ossea" },
+      "ecw_tbw_ratio": { "name": "Rapporto ECW/TBW" },
+      "extracellular_water": { "name": "Acqua extracellulare" },
+      "intracellular_water": { "name": "Acqua intracellulare" },
       "last_measurement_time": { "name": "Ultima ora di pesatura" },
       "lean_body_mass": { "name": "Massa corporea magra" },
       "metabolic_age": { "name": "Età metabolica" },
       "muscle_mass": { "name": "Massa muscolare" },
       "protein": { "name": "Proteine" },
+      "skeletal_muscle_mass": { "name": "Massa muscolare scheletrica" },
       "visceral_fat": { "name": "Grasso viscerale" },
       "water": { "name": "Acqua" },
       "weight": { "name": "Peso" }
@@ -85,6 +90,7 @@
             "underweight": "Sottopeso"
           }
         },
+        "body_cell_mass": { "name": "Massa cellulare" },
         "body_fat": { "name": "Grasso corporeo" },
         "body_score": { "name": "Punteggio corpo" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "Massa ossea" },
+        "ecw_tbw_ratio": { "name": "Rapporto ECW/TBW" },
+        "extracellular_water": { "name": "Acqua extracellulare" },
         "fat_mass_to_gain": { "name": "Massa grassa da guadagnare" },
         "fat_mass_to_lose": { "name": "Massa grassa da perdere" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "Impedenza" },
         "impedance_high": { "name": "Impedenza (250 kHz)" },
         "impedance_low": { "name": "Impedenza (50 kHz)" },
+        "intracellular_water": { "name": "Acqua intracellulare" },
         "last_measurement_time": { "name": "Ultima ora di pesatura" },
         "lean_body_mass": { "name": "Massa corporea magra" },
         "metabolic_age": { "name": "Età metabolica" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "Proteine" },
+        "skeletal_muscle_mass": { "name": "Massa muscolare scheletrica" },
         "visceral_fat": { "name": "Grasso viscerale" },
         "water": { "name": "Acqua" },
         "weight": { "name": "Peso" }

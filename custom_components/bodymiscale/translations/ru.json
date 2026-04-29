@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "Базальный метаболизм" },
       "bmi": { "name": "Индекс массы тела (ИМТ)" },
+      "body_cell_mass": { "name": "Масса клеток тела" },
       "body_fat": { "name": "Жировая масса" },
       "body_score": { "name": "Оценка тела" },
       "bone_mass": { "name": "Костная масса" },
+      "ecw_tbw_ratio": { "name": "Соотношение ECW/TBW" },
+      "extracellular_water": { "name": "Экзоклеточная вода" },
+      "intracellular_water": { "name": "Инtrakлеточная вода" },
       "last_measurement_time": { "name": "Время последнего взвешивания" },
       "lean_body_mass": { "name": "Безжировая масса тела" },
       "metabolic_age": { "name": "Метаболический возраст" },
       "muscle_mass": { "name": "Мышечная масса" },
       "protein": { "name": "Белок" },
+      "skeletal_muscle_mass": { "name": "Скелетная мышечная масса" },
       "visceral_fat": { "name": "Висцеральный жир" },
       "water": { "name": "Вода в организме" },
       "weight": { "name": "Вес" }
@@ -85,6 +90,7 @@
             "underweight": "Дефицит массы тела"
           }
         },
+        "body_cell_mass": { "name": "Масса клеток тела" },
         "body_fat": { "name": "Жировая масса" },
         "body_score": { "name": "Оценка тела" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "Костная масса" },
+        "ecw_tbw_ratio": { "name": "Соотношение ECW/TBW" },
+        "extracellular_water": { "name": "Экзоклеточная вода" },
         "fat_mass_to_gain": { "name": "Жировая масса для набора" },
         "fat_mass_to_lose": { "name": "Жировая масса для снижения" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "Биоимпеданс" },
         "impedance_high": { "name": "Биоимпеданс (250 кГц)" },
         "impedance_low": { "name": "Биоимпеданс (50 кГц)" },
+        "intracellular_water": { "name": "Интрацеллюлярная вода" },
         "last_measurement_time": { "name": "Время последнего взвешивания" },
         "lean_body_mass": { "name": "Безжировая масса тела" },
         "metabolic_age": { "name": "Метаболический возраст" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "Белок" },
+        "skeletal_muscle_mass": { "name": "Скелетная мышечная масса" },
         "visceral_fat": { "name": "Висцеральный жир" },
         "water": { "name": "Вода" },
         "weight": { "name": "Вес" }

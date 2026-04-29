@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "基础代谢" },
       "bmi": { "name": "BMI" },
+      "body_cell_mass": { "name": "体细胞量" },
       "body_fat": { "name": "体脂率" },
       "body_score": { "name": "身体评分" },
       "bone_mass": { "name": "骨量" },
+      "ecw_tbw_ratio": { "name": "ECW/TBW 比率" },
+      "extracellular_water": { "name": "细胞外水" },
+      "intracellular_water": { "name": "细胞内水" },
       "last_measurement_time": { "name": "上次称重时间" },
       "lean_body_mass": { "name": "瘦体重" },
       "metabolic_age": { "name": "身体年龄" },
       "muscle_mass": { "name": "肌肉量" },
       "protein": { "name": "蛋白质" },
+      "skeletal_muscle_mass": { "name": "骨骼肌量" },
       "visceral_fat": { "name": "内脏脂肪等级" },
       "water": { "name": "水分" },
       "weight": { "name": "体重" }
@@ -85,6 +90,7 @@
             "underweight": "偏瘦"
           }
         },
+        "body_cell_mass": { "name": "体细胞量" },
         "body_fat": { "name": "体脂率" },
         "body_score": { "name": "身体评分" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "骨量" },
+        "ecw_tbw_ratio": { "name": "ECW/TBW 比率" },
+        "extracellular_water": { "name": "细胞外水" },
         "fat_mass_to_gain": { "name": "需增加脂肪量" },
         "fat_mass_to_lose": { "name": "需减少脂肪量" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "阻抗" },
         "impedance_high": { "name": "高频阻抗 (250 kHz)" },
         "impedance_low": { "name": "低频阻抗 (50 kHz)" },
+        "intracellular_water": { "name": "细胞内水" },
         "last_measurement_time": { "name": "上次称重时间" },
         "lean_body_mass": { "name": "瘦体重" },
         "metabolic_age": { "name": "身体年龄" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "蛋白质" },
+        "skeletal_muscle_mass": { "name": "骨骼肌量" },
         "visceral_fat": { "name": "内脏脂肪" },
         "water": { "name": "水分" },
         "weight": { "name": "体重" }

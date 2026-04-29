@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "Bazálny metabolizmus" },
       "bmi": { "name": "BMI" },
+      "body_cell_mass": { "name": "Hmota bunkového tela" },
       "body_fat": { "name": "Telesný tuk" },
       "body_score": { "name": "Skóre tela" },
       "bone_mass": { "name": "Kostná hmota" },
+      "ecw_tbw_ratio": { "name": "Pomer ECW/TBW" },
+      "extracellular_water": { "name": "Extracelulárna voda" },
+      "intracellular_water": { "name": "Intracelulárna voda" },
       "last_measurement_time": { "name": "Čas posledného váženia" },
       "lean_body_mass": { "name": "Čistá telesná hmota" },
       "metabolic_age": { "name": "Metabolický vek" },
       "muscle_mass": { "name": "Svalová hmota" },
       "protein": { "name": "Bielkoviny" },
+      "skeletal_muscle_mass": { "name": "Skeletálna svalová hmota" },
       "visceral_fat": { "name": "Viscerálny tuk" },
       "water": { "name": "Voda v tele" },
       "weight": { "name": "Hmotnosť" }
@@ -85,6 +90,7 @@
             "underweight": "Podváha"
           }
         },
+        "body_cell_mass": { "name": "Hmota bunkového těla" },
         "body_fat": { "name": "Telesný tuk" },
         "body_score": { "name": "Skóre tela" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "Kostná hmota" },
+        "ecw_tbw_ratio": { "name": "Pomer ECW/TBW" },
+        "extracellular_water": { "name": "Extracelulárna voda" },
         "fat_mass_to_gain": { "name": "Tuková hmota na pribratie" },
         "fat_mass_to_lose": { "name": "Tuková hmota na schudnutie" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "Impedancia" },
         "impedance_high": { "name": "Impedancia (250 kHz)" },
         "impedance_low": { "name": "Impedancia (50 kHz)" },
+        "intracellular_water": { "name": "Intracelulárna voda" },
         "last_measurement_time": { "name": "Čas posledného váženia" },
         "lean_body_mass": { "name": "Čistá telesná hmota" },
         "metabolic_age": { "name": "Metabolický vek" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "Bielkoviny" },
+        "skeletal_muscle_mass": { "name": "Skeletální svalová hmota" },
         "visceral_fat": { "name": "Viscerálny tuk" },
         "water": { "name": "Voda" },
         "weight": { "name": "Hmotnosť" }

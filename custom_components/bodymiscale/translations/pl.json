@@ -48,14 +48,19 @@
     "sensor": {
       "basal_metabolism": { "name": "Podstawowa przemiana materii" },
       "bmi": { "name": "BMI" },
+      "body_cell_mass": { "name": "Masa komórek ciała" },
       "body_fat": { "name": "Tkanka tłuszczowa" },
       "body_score": { "name": "Ocena sylwetki" },
       "bone_mass": { "name": "Masa kości" },
+      "ecw_tbw_ratio": { "name": "Stosunek ECW/TBW" },
+      "extracellular_water": { "name": "Woda extracellularna" },
+      "intracellular_water": { "name": "Woda intracellularna" },
       "last_measurement_time": { "name": "Czas ostatniego ważenia" },
       "lean_body_mass": { "name": "Beztłuszczowa masa ciała" },
       "metabolic_age": { "name": "Wiek metaboliczny" },
       "muscle_mass": { "name": "Masa mięśniowa" },
       "protein": { "name": "Białko" },
+      "skeletal_muscle_mass": { "name": "Masa mięśniowa szkieletowych" },
       "visceral_fat": { "name": "Tłuszcz trzewny" },
       "water": { "name": "Woda w organizmie" },
       "weight": { "name": "Waga" }
@@ -85,6 +90,7 @@
             "underweight": "Niedowaga"
           }
         },
+        "body_cell_mass": { "name": "Masa komórek ciała" },
         "body_fat": { "name": "Tkanka tłuszczowa" },
         "body_score": { "name": "Ocena sylwetki" },
         "body_type": {
@@ -103,6 +109,8 @@
           }
         },
         "bone_mass": { "name": "Masa kości" },
+        "ecw_tbw_ratio": { "name": "Stosunek ECW/TBW" },
+        "extracellular_water": { "name": "Woda extracellularna" },
         "fat_mass_to_gain": { "name": "Masa tłuszczowa do przybrania" },
         "fat_mass_to_lose": { "name": "Masa tłuszczowa do utraty" },
         "gender": {
@@ -117,6 +125,7 @@
         "impedance": { "name": "Impedancja" },
         "impedance_high": { "name": "Impedancja (250 kHz)" },
         "impedance_low": { "name": "Impedancja (50 kHz)" },
+        "intracellular_water": { "name": "Woda intracellularna" },
         "last_measurement_time": { "name": "Czas ostatniego ważenia" },
         "lean_body_mass": { "name": "Beztłuszczowa masa ciała" },
         "metabolic_age": { "name": "Wiek metaboliczny" },
@@ -141,6 +150,7 @@
           }
         },
         "protein": { "name": "Białko" },
+        "skeletal_muscle_mass": { "name": "Masa mięśniowa szkieletowych" },
         "visceral_fat": { "name": "Tłuszcz trzewny" },
         "water": { "name": "Woda" },
         "weight": { "name": "Waga" }

@@ -4,12 +4,51 @@ All notable changes to this project will be documented in this file.
 
 <!--next-version-placeholder-->
 
+## 2026.4.4
+
+### ⚠️ IMPORTANT: Scientific Engine Overhaul
+
+This version replaces the experimental Lukaski-based equations with a more robust clinical model specifically optimized for S400 dual-frequency hardware. Users may notice slight shifts in their metrics as we move towards higher physiological accuracy and better medical alignment.
+
+### 🚀 S400 Dual-Frequency Enhancements
+
+- **Full Engine Replacement:** Replaced experimental Lukaski core with a clinical-grade multi-frequency suite:
+
+  - **LBM:** New hardware-calibrated equation utilizing $Z_{lf}$ (50 kHz) to eliminate the "over-fat" bias common in consumer foot-to-foot scales.
+  - **TBW (Total Body Water):** Implemented **Deurenberg et al. (1995)** utilizing $Z_{hf}$ (250 kHz), offering superior validation against isotope dilution.
+  - **ECW (Extracellular Water):** Introduced **De Lorenzo et al. (1997)** for precise fluid partitioning.
+  - **BMR:** Replaced statistical models with **Katch-McArdle (1996)** (`370 + 21.6 × LBM`). This prioritizes actual measured Lean Body Mass, providing much higher accuracy for athletic or overweight users.
+  - **Metabolic Age:** Now calculated using a BMR-relative ratio, reflecting actual metabolic health based on measured cellular activity.
+
+- **New Exclusive Metrics:** Unlocked 5 clinical sensors for dual-frequency mode:
+  - `extracellular_water` (ECW) & `intracellular_water` (ICW).
+  - `ecw_tbw_ratio`: Key indicator for hydration and nutritional status (Normal: 37–39%).
+  - `body_cell_mass` (BCM): The metabolically active compartment of your body.
+  - `skeletal_muscle_mass` (SMM): **Janssen et al. (2000)** equation, validated against MRI.
+
+### 🧪 Science & Global Changes
+
+- **BMR (Science Mode):** Standardized to the **Schofield (WHO)** equation for all non-dual
+  devices, ensuring alignment with international health standards.
+- **Water (Science Mode):** Now uses the **Pace & Rathbun (1945)** constant (73% of lean mass)
+  instead of the Xiaomi 70% factor, for better physiological accuracy.
+- **Protein Calculation:** Shifted to the **Wang et al. (1999)** molecular compartment model.
+  Proteins are now calculated as a stable 19.5% fraction of LBM for better cross-metric
+  consistency (applies to both Science and S400 modes).
+- **Body Score:** Minimum score clamped to **10** (previously 0) to distinguish a
+  low-but-measurable result from an unavailable metric.
+- **Home Assistant Integration:** New sensor entities for the 5 S400 metrics are created
+  automatically when `impedance_mode: dual` is detected.
+
 ## 2026.4.3
 
 - **Added (Experimental):** Dual-frequency impedance support for Xiaomi S400 and compatible scales. A new `impedance_mode` selector in the integration configuration allows choosing between `None`, `Standard` (single-frequency), and `Dual-frequency S400` (50 kHz + 250 kHz). ⚠️ The S400 dual-frequency mode is **experimental** — formulas are calibrated on a single reference point and results may vary depending on your body composition and scale firmware. Help us improve them: [#349](https://github.com/dckiller51/bodymiscale/issues/349).
 - **Added:** New `impedance_low` and `impedance_high` sensor entities exposed when dual-frequency mode is active.
 - **Added:** Separate `calculation_mode` and `impedance_mode` settings. `calculation_mode` (Xiaomi / Scientific) applies only to standard single-frequency mode. The S400 dual-frequency mode uses its own dedicated formulas regardless of this setting.
-- **Changed:** Calculation modes are now clearly separated by purpose — `Xiaomi` replicates the Zepp Life / Mi Fit app results exactly, `Scientific` uses WHO-recommended equations (Mifflin–St Jeor for BMR, Janmahasatian for LBM), and `S400` uses Lukaski-based dual-frequency BIA equations.
+- **Changed:** Calculation modes are now clearly separated by purpose — `Xiaomi` replicates
+  the Zepp Life / Mi Fit app results exactly, `Scientific` uses WHO-recommended equations,
+  and `S400` uses its own dedicated dual-frequency adapted formulas.
+  _(Note: the specific equations for Scientific and S400 modes were revised in 2026.4.4.)_
 - **Fixed:** Migration path from config entry version 2 → 3 now correctly sets `impedance_mode` based on existing sensor configuration.
 
 ## 2026.4.2
@@ -185,7 +224,7 @@ Major update by @edenhaus, improving code quality and enabling development in a 
 
 ## v1.1.5
 
-Fixed:\*\* Convert weight from lbs to kgs if your scale is set to this unit (thank you @rale).
+- **Fixed:** Convert weight from lbs to kgs if your scale is set to this unit (thank you @rale).
 
 - **Added:** Portuguese Brazilian language support (thank you @hudsonbrendon).
 
