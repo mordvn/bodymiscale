@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 <!--next-version-placeholder-->
 
+## 2026.4.5
+
+### 🐛 Bug Fixes
+
+- **Water Percentage (Dual Mode):** Corrected the displayed water percentage in
+  S400 dual-frequency mode. The Deurenberg formula was producing physiologically
+  implausible values (>90% for BMI <28), which were then clamped to 73%. The
+  displayed percentage now consistently uses the **Pace & Rathbun (1945)**
+  constant (`(100 − fat%) × 0.73`), expressing TBW as a percentage of **total
+  body weight** (~55–65% typical range) rather than an inflated figure. The
+  underlying Deurenberg TBW liters are still used internally for ECW/ICW/BCM
+  compartment calculations. (Fixes [#360](https://github.com/dckiller51/bodymiscale/issues/360)).
+
+- **Skeletal Muscle Mass (Standard Mode):** Fixed an issue where
+  `skeletal_muscle_mass` was incorrectly exposed as an attribute in standard
+  (single-frequency) mode. This metric now only appears in **dual-frequency
+  mode**.
+
 ## 2026.4.4
 
 ### ⚠️ IMPORTANT: Scientific Engine Overhaul

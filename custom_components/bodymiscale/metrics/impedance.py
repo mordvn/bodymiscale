@@ -10,7 +10,7 @@ Three distinct modes, each with its own formulas:
     Based on WHO recommendations and validated equations:
       - LBM      : Hardware-calibrated formula (same baseline as Xiaomi/S400)
       - Fat%     : direct 2-compartment method (Siri 1956)
-      - Water    : Pace constant 1963 (73% of lean mass)
+      - Water    : Pace & Rathbun constant (displayed as % of total body weight)
       - BMR      : Schofield equation (official WHO standard)
       - Protein% : Wang 1999 (protein is ~19.5% of LBM)
 
@@ -213,52 +213,24 @@ def get_water_percentage(
     XIAOMI :
         Zepp Life formula — (100 − fat%) × 0.7, with a correction coefficient.
 
-    SCIENCE :
+    SCIENCE / S400:
         Pace & Rathbun 1945 / Siri 1956 constant:
         water% = (100 − fat%) × 0.73
 
-    S400 (experimental) :
-        Inspired by Deurenberg et al. 1995 (Am J Clin Nutr 61(1):4-12),
-        originally validated on hand-to-foot devices. Coefficients have been
-        empirically adjusted for foot-to-foot scales
-        (0.718 / 0.105 instead of the original 0.449 / 0.066):
-            TBW (L) = 0.718×(H²/Z_lf) + 0.105×(H²/Z_hf) + 0.233×W − 3.61
-            water%  = (TBW / W) × 100
+    This expresses TBW as a percentage of total body weight, which is
+    the clinically meaningful and consumer-expected metric
+    (typical adult male range ~55–65%).
 
-        ⚠️ Limitation: this formula overestimates TBW for subjects with BMI < 28
-        (typically producing water% > 90%, clamped to 75% for display). The
-        *displayed* water% remains physiologically plausible after clamping, but
-        ECW/ICW/BCM must NOT derive TBW from this clamped value. Those functions
-        use ``_get_tbw_for_compartments()`` (Pace constant) as their TBW source
-        for accuracy. See that function's docstring for full explanation.
-
-        ⚠️ No peer-reviewed equation exists for dual-frequency foot-to-foot BIA.
-        This is a best-effort adaptation — treat as a relative indicator.
+    For S400 dual-frequency mode, the Deurenberg formula is still used
+    internally for TBW liters (ECW/ICW/BCM calculations), but the displayed
+    water percentage uses Pace for physiological plausibility.
     """
     fat_pct = to_float(metrics.get(Metric.FAT_PERCENTAGE))
     mode = config.get(CONF_CALCULATION_MODE, ALGO_XIAOMI)
 
-    # 1. S400 MODE (Dual Frequency)
-    if _is_dual(config):
-        h = to_float(config.get(CONF_HEIGHT))
-        w = to_float(metrics.get(Metric.WEIGHT))
-        z_lf, z_hf = _get_z_lf(metrics), _get_z_hf(metrics)
-        if h > 0 and w > 0 and z_lf > 0 and z_hf > 0:
-            # Deurenberg structure adapted for foot-to-foot hardware.
-            # Coefficients (0.718/0.105) are scaled up from the original
-            # hand-to-foot values (0.449/0.066) to compensate for higher
-            # impedance levels on foot-to-foot scales. Valid for display only;
-            # ECW/ICW/BCM use a separate TBW source (see _get_tbw_for_compartments).
-            tbw = 0.718 * ((h * h) / z_lf) + 0.105 * ((h * h) / z_hf) + 0.233 * w - 3.61
-            water_pct = (tbw / w) * 100.0
-        else:
-            # Fallback if impedance is missing
-            water_pct = (100.0 - fat_pct) * 0.73
-
-        return clamp_water_percentage(water_pct)
-
+    # 1. S400 MODE (Dual Frequency) — display Pace, Deurenberg used for liters only
     # 2. SCIENCE MODE (Pace constant 0.73)
-    if mode == ALGO_SCIENCE:
+    if _is_dual(config) or mode == ALGO_SCIENCE:
         water_pct = (100.0 - fat_pct) * 0.73
         return clamp_water_percentage(water_pct)
 
