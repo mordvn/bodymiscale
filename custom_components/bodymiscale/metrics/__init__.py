@@ -404,6 +404,11 @@ class BodyScaleMetricsHandler:
         raw = state.state
         if raw in (STATE_UNAVAILABLE, STATE_UNKNOWN):
             return
+        target = self._get_target_profile_id()
+        if target is not None:
+            # For per-user cards, expose configured target profile id.
+            self._update_available_metric(Metric.PROFILE_ID, target)
+            return
         try:
             profile_id = int(float(raw))
         except (TypeError, ValueError):
@@ -442,14 +447,9 @@ class BodyScaleMetricsHandler:
 
     def _profile_matches_filter(self) -> bool:
         """Return True when event data belongs to selected profile (or no filter)."""
-        target_raw = self._config.get(CONF_TARGET_PROFILE_ID)
+        target = self._get_target_profile_id()
         profile_entity = self._config.get(CONF_SENSOR_PROFILE_ID)
-        if target_raw is None or profile_entity is None:
-            return True
-
-        try:
-            target = int(float(target_raw))
-        except (TypeError, ValueError):
+        if target is None or profile_entity is None:
             return True
 
         current_state = self._hass.states.get(profile_entity)
@@ -462,6 +462,16 @@ class BodyScaleMetricsHandler:
             return False
 
         return current == target
+
+    def _get_target_profile_id(self) -> int | None:
+        """Return configured target profile id as int, if provided and valid."""
+        target_raw = self._config.get(CONF_TARGET_PROFILE_ID)
+        if target_raw is None:
+            return None
+        try:
+            return int(float(target_raw))
+        except (TypeError, ValueError):
+            return None
 
     # ── Problem management ────────────────────────────────────────────────────
 
