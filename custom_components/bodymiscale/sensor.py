@@ -38,6 +38,7 @@ from .const import (
     ATTR_WATER,
     CONF_IMPEDANCE_MODE,
     CONF_SENSOR_LAST_MEASUREMENT_TIME,
+    CONF_SENSOR_PROFILE_ID,
     CONF_SENSOR_WEIGHT,
     DOMAIN,
     HANDLERS,
@@ -122,6 +123,15 @@ async def async_setup_entry(
                 device_class=SensorDeviceClass.TIMESTAMP,
             ),
             Metric.LAST_MEASUREMENT_TIME,
+        ),
+        BodyScaleSensor(
+            handler,
+            SensorEntityDescription(
+                key=CONF_SENSOR_PROFILE_ID,
+                translation_key="profile_id",
+                suggested_display_precision=0,
+            ),
+            Metric.PROFILE_ID,
         ),
     ]
 

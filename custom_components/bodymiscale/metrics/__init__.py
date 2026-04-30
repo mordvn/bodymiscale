@@ -91,6 +91,7 @@ class MetricInfo:
 _METRIC_DEPS: dict[Metric, MetricInfo] = {
     Metric.STATUS: MetricInfo([], lambda c, s: None),
     Metric.AGE: MetricInfo([], lambda c, s: None, 0),
+    Metric.PROFILE_ID: MetricInfo([], lambda c, s: None, 0),
     Metric.WEIGHT: MetricInfo([], lambda c, s: None, 2),
     Metric.IMPEDANCE: MetricInfo([], lambda c, s: None, 0),
     Metric.IMPEDANCE_LOW: MetricInfo([], lambda c, s: None, 0),
@@ -195,7 +196,7 @@ class BodyScaleMetricsHandler:
         self._subscribers: dict[
             Metric, list[Callable[[StateType | datetime], None]]
         ] = {}
-        self._profile_refresh_handle: CALLBACK_TYPE | None = None
+        self._weight_refresh_handle: CALLBACK_TYPE | None = None
 
         # Build the dependency graph
         self._dependencies: dict[Metric, MetricInfo] = {}
@@ -285,42 +286,10 @@ class BodyScaleMetricsHandler:
             self._process_profile_id(new_state)
             return
 
-        if not self._profile_matches_filter():
+        if entity_id != self._config.get(CONF_SENSOR_WEIGHT):
             return
 
-        raw = new_state.state
-
-        # Sensor back to unknown → clear the problem without recalculating
-        if raw == STATE_UNKNOWN:
-            self._clear_sensor_problem(entity_id)
-            return
-
-        valid = False
-        problem: str | None = None
-
-        if entity_id == self._config[CONF_SENSOR_WEIGHT]:
-            valid, problem = self._process_weight(new_state)
-
-        elif entity_id == self._config.get(CONF_SENSOR_IMPEDANCE):
-            valid, problem = self._process_impedance(new_state, Metric.IMPEDANCE)
-
-        elif entity_id == self._config.get(CONF_SENSOR_IMPEDANCE_LOW):
-            valid, problem = self._process_impedance(new_state, Metric.IMPEDANCE_LOW)
-
-        elif entity_id == self._config.get(CONF_SENSOR_IMPEDANCE_HIGH):
-            valid, problem = self._process_impedance(new_state, Metric.IMPEDANCE_HIGH)
-
-        elif entity_id == self._config.get(CONF_SENSOR_LAST_MEASUREMENT_TIME):
-            problem = self._process_last_measurement_time(new_state)
-
-        # Update global status
-        if problem:
-            self._set_sensor_problem(entity_id, problem)
-        else:
-            self._clear_sensor_problem(entity_id)
-
-        if valid:
-            self._trigger_dependent_recalculation()
+        self._schedule_weight_replay()
 
     # ── Process helpers ───────────────────────────────────────────────────────
 
@@ -441,21 +410,19 @@ class BodyScaleMetricsHandler:
             _LOGGER.debug("Ignoring invalid profile id value: %s", raw)
             return
         self._update_available_metric(Metric.PROFILE_ID, profile_id)
-        # BLE events can arrive out of order; wait a bit and then replay.
-        self._schedule_profile_replay()
 
-    def _schedule_profile_replay(self) -> None:
-        """Schedule delayed replay after profile id update."""
-        if self._profile_refresh_handle is not None:
-            self._profile_refresh_handle()
+    def _schedule_weight_replay(self) -> None:
+        """Delay calculations to let BLE measurements settle."""
+        if self._weight_refresh_handle is not None:
+            self._weight_refresh_handle()
 
-        self._profile_refresh_handle = self._hass.loop.call_later(
+        self._weight_refresh_handle = self._hass.loop.call_later(
             PROFILE_MATCH_RECALC_DELAY, self._replay_for_current_profile
         ).cancel
 
     def _replay_for_current_profile(self) -> None:
         """Replay measurement states once BLE values have likely settled."""
-        self._profile_refresh_handle = None
+        self._weight_refresh_handle = None
         if not self._profile_matches_filter():
             return
 
