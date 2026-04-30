@@ -21,6 +21,7 @@ BodyMiScale calculates advanced body composition metrics based on your scale's d
 Here's a breakdown of the process:
 
 1. **Data Input:** Bodymiscale relies on data provided by your configured weight sensor (Weight and optionally Impedance). This can be a `sensor` or an `input_number` entity.
+
    - **Optional profile filtering:** You can also provide a `Profile ID` sensor and a `target_profile_id` so one Bodymiscale entry only accepts measurements for one person (useful with Xiaomi BLE shared sensors).
 
 2. **Smart Calculation Engine:** Depending on your configuration, Bodymiscale applies one of three scientific models:

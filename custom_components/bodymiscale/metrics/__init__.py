@@ -337,7 +337,10 @@ class BodyScaleMetricsHandler:
                 (self._config.get(CONF_SENSOR_IMPEDANCE_LOW), Metric.IMPEDANCE_LOW),
                 (self._config.get(CONF_SENSOR_IMPEDANCE_HIGH), Metric.IMPEDANCE_HIGH),
             ):
-                if entity_id and (state := self._hass.states.get(entity_id)) is not None:
+                if (
+                    entity_id
+                    and (state := self._hass.states.get(entity_id)) is not None
+                ):
                     valid, problem = self._process_impedance(state, metric)
                     if problem:
                         self._set_sensor_problem(entity_id, problem)

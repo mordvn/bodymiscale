@@ -134,7 +134,6 @@
         "lean_body_mass": { "name": "Lean body mass" },
         "metabolic_age": { "name": "Metabolic age" },
         "muscle_mass": { "name": "Muscle mass" },
-        "profile_id": { "name": "Profile ID" },
         "problem": {
           "name": "Problem",
           "state": {
@@ -154,6 +153,7 @@
             "weight_unavailable": "Weight unavailable"
           }
         },
+        "profile_id": { "name": "Profile ID" },
         "protein": { "name": "Protein" },
         "skeletal_muscle_mass": { "name": "Skeletal muscle mass" },
         "visceral_fat": { "name": "Visceral fat" },

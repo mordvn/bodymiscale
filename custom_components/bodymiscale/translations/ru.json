@@ -134,7 +134,6 @@
         "lean_body_mass": { "name": "Безжировая масса тела" },
         "metabolic_age": { "name": "Метаболический возраст" },
         "muscle_mass": { "name": "Мышечная масса" },
-        "profile_id": { "name": "Profile ID" },
         "problem": {
           "name": "Проблема",
           "state": {
@@ -154,6 +153,7 @@
             "weight_unavailable": "Вес недоступен"
           }
         },
+        "profile_id": { "name": "Profile ID" },
         "protein": { "name": "Белок" },
         "skeletal_muscle_mass": { "name": "Скелетная мышечная масса" },
         "visceral_fat": { "name": "Висцеральный жир" },
