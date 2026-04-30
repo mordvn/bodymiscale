@@ -15,6 +15,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE, UnitOfMass
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers.typing import StateType
 
 from .const import (
@@ -304,7 +305,7 @@ async def async_setup_entry(
     async_add_entities(new_sensors)
 
 
-class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity):
+class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity, RestoreEntity):
     """Body scale sensor."""
 
     def __init__(
@@ -325,6 +326,23 @@ class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity):
     async def async_added_to_hass(self) -> None:
         """Set up the event listeners now that hass is ready."""
         await super().async_added_to_hass()
+        if (last_state := await self.async_get_last_state()) is not None:
+            if last_state.state in ("unknown", "unavailable", "none"):
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = dict(last_state.attributes)
+                return
+            if self.entity_description.key == CONF_SENSOR_LAST_MEASUREMENT_TIME:
+                try:
+                    self._attr_native_value = datetime.fromisoformat(last_state.state)
+                except ValueError:
+                    self._attr_native_value = None
+            else:
+                try:
+                    self._attr_native_value = float(last_state.state)
+                except ValueError:
+                    self._attr_native_value = last_state.state
+
+            self._attr_extra_state_attributes = dict(last_state.attributes)
 
         def on_value(value: StateType | datetime) -> None:
             """Handle a new sensor value and update the entity state."""
