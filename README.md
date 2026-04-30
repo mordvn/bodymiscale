@@ -21,6 +21,7 @@ BodyMiScale calculates advanced body composition metrics based on your scale's d
 Here's a breakdown of the process:
 
 1. **Data Input:** Bodymiscale relies on data provided by your configured weight sensor (Weight and optionally Impedance). This can be a `sensor` or an `input_number` entity.
+   - **Optional profile filtering:** You can also provide a `Profile ID` sensor and a `target_profile_id` so one Bodymiscale entry only accepts measurements for one person (useful with Xiaomi BLE shared sensors).
 
 2. **Smart Calculation Engine:** Depending on your configuration, Bodymiscale applies one of three scientific models:
 
@@ -68,6 +69,14 @@ If you plan to integrate your own last weigh-in sensor, make sure a dedicated se
 
 **(Optional) Last measurement time sensor:**
 Previously mandatory for accurate history, this is now optional. Bodymiscale now automatically generates a timestamp based on Home Assistant's internal clock whenever a weight change is detected. If you provide a dedicated sensor, Bodymiscale will prioritize that "real" measurement time over the system time.
+
+**(Optional) Profile ID sensor (multi-user):**
+If your scale integration exposes a profile selector (for example Xiaomi BLE `Profile ID`), you can configure:
+
+- `profile_id`: the entity carrying the current profile id from the scale
+- `target_profile_id`: the profile id assigned to this Bodymiscale user
+
+With this setup, one shared scale sensor can be reused for multiple users without values jumping between cards.
 
 ## Generated data
 
@@ -176,7 +185,11 @@ Exclusive to dual-frequency hardware capable of measuring impedance at 50 kHz an
 6. **Last measurement time sensor (optional):**
    If you have a last weigh-in sensor, select it here (e.g., a `sensor`, or an `input_datetime`). This sensor is used to record the date and time of the most recent measurement.
    Recommendation: Just like the weight and impedance sensors, it is strongly recommended that each user has their own dedicated last weigh-in sensor to prevent conflicts or errors during Home Assistant restarts.
-7. Click "Save".
+7. **Profile ID filter (optional, recommended for Xiaomi BLE multi-user):**
+   - **Profile ID sensor:** Select the scale profile entity (for example `sensor.body_composition_scale_fe03_profile_id`).
+   - **Profile ID to track:** Set the user-specific id (example: `3` for user A, `4` for user B).
+   - Bodymiscale will then update this entry only when incoming measurements match the configured profile id.
+8. Click "Save".
 
 **Explanation of choices:**
 
@@ -186,6 +199,7 @@ Exclusive to dual-frequency hardware capable of measuring impedance at 50 kHz an
 **Tips:**
 
 - If you do not have an impedance sensor, some metrics will not be available. You can still use Bodymiscale to get basic information (weight, BMI, etc.).
+- If you use one shared BLE scale for multiple people, configure `profile_id` + `target_profile_id` per user to avoid cross-user updates.
 
 ---
 
