@@ -313,7 +313,8 @@ class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity, RestoreEntity):
         handler: BodyScaleMetricsHandler,
         entity_description: SensorEntityDescription,
         metric: Metric,
-        get_attributes: None | (
+        get_attributes: None
+        | (
             Callable[[StateType | datetime, Mapping[str, Any]], Mapping[str, Any]]
         ) = None,
     ):
@@ -338,7 +339,14 @@ class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity, RestoreEntity):
                     self._attr_native_value = None
             else:
                 try:
-                    self._attr_native_value = float(last_state.state)
+                    parsed_value = float(last_state.state)
+                    precision = self.entity_description.suggested_display_precision
+                    if precision == 0:
+                        self._attr_native_value = int(round(parsed_value))
+                    else:
+                        self._attr_native_value = round(
+                            parsed_value, precision if precision is not None else 2
+                        )
                 except ValueError:
                     self._attr_native_value = last_state.state
 
@@ -359,9 +367,13 @@ class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity, RestoreEntity):
             else:
                 if isinstance(value, (int, float)):
                     precision = self.entity_description.suggested_display_precision
-                    self._attr_native_value = round(
-                        float(value), precision if precision is not None else 2
-                    )
+                    parsed_value = float(value)
+                    if precision == 0:
+                        self._attr_native_value = int(round(parsed_value))
+                    else:
+                        self._attr_native_value = round(
+                            parsed_value, precision if precision is not None else 2
+                        )
                 else:
                     self._attr_native_value = value
 
