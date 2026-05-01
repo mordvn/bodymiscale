@@ -313,8 +313,7 @@ class BodyScaleSensor(BodyScaleBaseEntity, SensorEntity, RestoreEntity):
         handler: BodyScaleMetricsHandler,
         entity_description: SensorEntityDescription,
         metric: Metric,
-        get_attributes: None
-        | (
+        get_attributes: None | (
             Callable[[StateType | datetime, Mapping[str, Any]], Mapping[str, Any]]
         ) = None,
     ):
