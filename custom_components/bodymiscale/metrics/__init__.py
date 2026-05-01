@@ -138,7 +138,11 @@ _METRIC_DEPS: dict[Metric, MetricInfo] = {
         [Metric.WATER_PERCENTAGE, Metric.ECW], get_ecw_tbw_ratio, 1
     ),
     Metric.BCM: MetricInfo([Metric.WATER_PERCENTAGE, Metric.ECW], get_bcm, 2),
-    Metric.SKELETAL_MUSCLE_MASS: MetricInfo([Metric.LBM], get_skeletal_muscle_mass, 2),
+    Metric.SKELETAL_MUSCLE_MASS: MetricInfo(
+        [Metric.LBM, Metric.IMPEDANCE_LOW, Metric.IMPEDANCE_HIGH],
+        get_skeletal_muscle_mass,
+        2,
+    ),
     # ── Body score ───────────────────────────────────────────────────────────
     Metric.BODY_SCORE: MetricInfo(
         [

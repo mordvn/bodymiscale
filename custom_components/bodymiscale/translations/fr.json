@@ -29,7 +29,7 @@
           "weight": "Capteur de poids"
         },
         "data_description": {
-          "calculation_mode": "Xiaomi : copie conforme de l'app Zepp Life. Science : formules OMS / Mifflin. Sans effet en mode S400 (bi-fréquence).",
+          "calculation_mode": "Xiaomi : copie conforme de l'app Zepp Life. Science : formules OMS / Schofield. Sans effet en mode S400 (bi-fréquence).",
           "impedance_mode": "Aucun : balance sans impédance. Standard : mono-fréquence (Xiaomi Gen2). Bi-fréquence S400 : capteurs 50 kHz + 250 kHz.",
           "last_measurement_time": "Optionnel. Laissez vide si vous n'avez pas ce capteur."
         },
@@ -181,7 +181,7 @@
           "weight": "Capteur de poids"
         },
         "data_description": {
-          "calculation_mode": "Xiaomi : copie conforme de l'app Zepp Life. Science : formules OMS / Mifflin. Sans effet en mode S400 (bi-fréquence).",
+          "calculation_mode": "Xiaomi : copie conforme de l'app Zepp Life. Science : formules OMS / Schofield. Sans effet en mode S400 (bi-fréquence).",
           "impedance_mode": "Aucun : balance sans impédance. Standard : mono-fréquence (Xiaomi Gen2). Bi-fréquence S400 : capteurs 50 kHz + 250 kHz.",
           "last_measurement_time": "Optionnel. Laissez vide si vous n'avez pas ce capteur."
         },
@@ -192,7 +192,7 @@
   "selector": {
     "calculation_mode": {
       "options": {
-        "science": "Scientifique — OMS / Mifflin",
+        "science": "Scientifique — OMS / Schofield",
         "xiaomi": "Xiaomi — Zepp Life (Legacy 2017)"
       }
     },
